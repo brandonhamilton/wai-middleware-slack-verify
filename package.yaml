@@ -1,0 +1,71 @@
+name:                wai-middleware-slack-verify
+version:             0.1.0.0
+github:              "brandonhamilton/wai-middleware-slack-verify"
+license:             MIT
+author:              "Brandon Hamilton"
+maintainer:          "brandon.hamilton@gmail.com"
+copyright:           "Copyright (c) 2018 Brandon Hamilton"
+synopsis:            WAI Slack request verification middleware
+category:            Web
+
+extra-source-files:
+- README.md
+
+description: |
+  Middleware for WAI that uses signed secrets to verify Slack requests.\n 
+  See <https://api.slack.com/docs/verifying-requests-from-slack>
+
+default-extensions:
+- OverloadedStrings
+
+dependencies:
+- base >= 4.7 && < 5
+- bytestring
+- cryptonite
+- errors
+- http-types >= 0.8
+- memory
+- wai >= 3.0
+
+flags:
+  build-example:
+    description:         Build example executable.
+    manual:              True
+    default:             False
+
+library:
+  source-dirs: src
+
+executables:
+  bot-example:
+    main:                Bot.hs
+    source-dirs:         examples
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    when:
+    - condition: flag(build-example)
+      then:
+        dependencies:
+        - wai-middleware-slack-verify
+        - linklater
+        - text
+        - warp
+      else:
+        buildable: False
+
+tests:
+  wai-middleware-slack-verify-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - wai-middleware-slack-verify
+    - hspec >= 1.3
+    - HUnit
+    - time
+    - wai-extra

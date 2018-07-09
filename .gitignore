@@ -1,0 +1,4 @@
+.stack-work/
+wai-middleware-slack-verify.cabal
+*~
+dist/

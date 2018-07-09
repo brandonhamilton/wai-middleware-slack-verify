@@ -1,0 +1,7 @@
+resolver: lts-11.17
+
+packages:
+- .
+
+extra-deps:
+- linklater-4.0.0.2
